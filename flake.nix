@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixos-23.05;
+    flake-utils.url = "github:numtide/flake-utils";
     dotool = {
       url = sourcehut:~geb/dotool;
       flake = false;
@@ -13,8 +14,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, dotool, numen }: {
+  outputs = { self, nixpkgs, flake-utils, dotool, numen }: {
 
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = import nixpkgs {
+          inherit system;
+      };
+    in {
+      defaultPackage = pkgs.callPackage recipe {};
     packages.x86_64-linux.default =
       with import nixpkgs { system = "x86_64-linux"; };
       let vosk-bin = pkgs.stdenv.mkDerivation {
