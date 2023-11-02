@@ -1,9 +1,12 @@
-{ dotool-src, buildGo119Module, pkg-config, libxkbcommon }:
+{ dotool-src, buildGo119Module, pkg-config, libxkbcommon, tree }:
 buildGo119Module rec {
   pname = "dotool";
   version = "1.3";
   vendorSha256 = "sha256-v0uoG9mNaemzhQAiG85RequGjkSllPd4UK2SrLjfm7A=";
   src = dotool-src;
-  nativeBuildInputs = [ pkg-config ];
+  nativeBuildInputs = [ pkg-config tree ];
   buildInputs = [ libxkbcommon ];
+  postInstall = ''
+    install -D $src/80-dotool.rules $out/lib/udev/rules.d/80-dotool.rules
+  '';
 }
