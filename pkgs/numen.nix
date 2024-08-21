@@ -1,6 +1,6 @@
 { fetchFromSourcehut
 , stdenv
-, buildGo119Module
+, buildGo123Module
 , makeWrapper
 , scdoc
 , dotool
@@ -16,7 +16,7 @@
 , dmenu
 , procps
 }:
-buildGo119Module rec {
+buildGo123Module rec {
   pname = "numen";
   version = "0.7";
   src = fetchFromSourcehut {
@@ -25,7 +25,7 @@ buildGo119Module rec {
     rev = version;
     hash = "sha256-ia01lOP59RdoiO23b5Dv5/fX5CEI43tPHjmaKwxP+OM=";
   };
-  vendorSha256 = "sha256-Y3CbAnIK+gEcUfll9IlEGZE/s3wxdhAmTJkj9zlAtoQ=";
+  vendorHash = "sha256-Y3CbAnIK+gEcUfll9IlEGZE/s3wxdhAmTJkj9zlAtoQ=";
   preBuild = ''
     export CGO_CFLAGS="-I${vosk-bin}/include"
     export CGO_LDFLAGS="-L${vosk-bin}/lib"
