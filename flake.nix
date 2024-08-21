@@ -11,8 +11,7 @@
       vosk-bin = pkgs.callPackage (import ./pkgs/vosk-bin.nix) { };
       vosk-model-small-en-us =
         pkgs.callPackage (import ./pkgs/vosk-model-small-en-us.nix) { };
-      dotool =
-        pkgs.callPackage (import ./pkgs/dotool.nix) { };
+      dotool = pkgs.dotool;
       numen = pkgs.callPackage (import ./pkgs/numen.nix) {
         inherit dotool vosk-bin vosk-model-small-en-us;
       };
