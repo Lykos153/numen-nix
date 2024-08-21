@@ -54,6 +54,7 @@ buildGo123Module rec {
       --replace "(ps" "(${procps}/bin/ps"
     substituteInPlace phrases/* \
       --replace /etc/numen/scripts "$out/etc/numen/scripts" \
+      --replace head ${coreutils}/bin/head \
       --replace numenc "$out/bin/numenc"
     substituteInPlace numenc \
       --replace /bin/echo "${coreutils}/bin/echo" \
