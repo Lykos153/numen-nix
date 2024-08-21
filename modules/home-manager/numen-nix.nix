@@ -58,6 +58,14 @@ in
         The XKB keyboard layout that should be used by dotool.
       '';
     };
+
+    dotoolXkbVariant = mkOption {
+      type = types.singleLineStr;
+      default = "";
+      description = ''
+        The XKB keyboard variant that should be used by dotool.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
@@ -70,6 +78,7 @@ in
       Install.WantedBy = [ "graphical-session.target" ];
       Service.Environment = [
         "DOTOOL_XKB_LAYOUT=${cfg.dotoolXkbLayout}"
+        "DOTOOL_XKB_VARIANT=${cfg.dotoolXkbVariant}"
         "NUMEN_MODEL=${cfg.model}"
       ];
       Service.ExecStart = "${cfg.numenPkg}/bin/numen ${cfg.extraArgs} ${lib.strings.concatStringsSep " " cfg.phrases}";
