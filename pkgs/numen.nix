@@ -42,23 +42,10 @@ buildGo123Module rec {
   # still point outside of the store.
   patchPhase = ''
     substituteInPlace scripts/* \
-      --replace /etc/numen/scripts "$out/etc/numen/scripts" \
-      --replace sed ${gnused}/bin/sed \
-      --replace awk ${gawk}/bin/awk \
-      --replace cat ${coreutils}/bin/cat \
-      --replace notify-send ${libnotify}/bin/notify-send
-    substituteInPlace scripts/menu \
-      --replace "-dmenu" "-${dmenu}/bin/dmenu"
-    substituteInPlace scripts/displaying \
-      --replace "(pgrep" "(${procps}/bin/pgrep" \
-      --replace "(ps" "(${procps}/bin/ps"
+      --replace /etc/numen/scripts "$out/etc/numen/scripts"
     substituteInPlace phrases/* \
       --replace /etc/numen/scripts "$out/etc/numen/scripts" \
-      --replace head ${coreutils}/bin/head \
       --replace numenc "$out/bin/numenc"
-    substituteInPlace numenc \
-      --replace /bin/echo "${coreutils}/bin/echo" \
-      --replace cat "${coreutils}/bin/cat" \
   '';
   installPhase = ''
     runHook preInstall
@@ -74,7 +61,7 @@ buildGo123Module rec {
   '';
   postFixup = ''
     wrapProgram $out/bin/numen \
-      --prefix PATH : ${lib.makeBinPath [ dotool alsa-utils ]} \
+      --prefix PATH : ${lib.makeBinPath [ dotool alsa-utils coreutils procps gawk libnotify dmenu gnused ]} \
       --prefix LD_LIBRARY_PATH : ${
         lib.makeLibraryPath [ libxkbcommon stdenv.cc.cc.lib ]
       } \

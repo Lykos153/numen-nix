@@ -12,7 +12,7 @@ in
       default = false;
     };
 
-    numenPkg = mkOption {
+    package = mkOption {
       type = types.package;
       default = numen;
     };
@@ -51,7 +51,7 @@ in
       '';
     };
 
-    dotoolXkbLayout = mkOption {
+    xkbLayout = mkOption {
       type = types.singleLineStr;
       default = "en";
       description = ''
@@ -59,7 +59,7 @@ in
       '';
     };
 
-    dotoolXkbVariant = mkOption {
+    xkbVariant = mkOption {
       type = types.singleLineStr;
       default = "";
       description = ''
@@ -77,11 +77,12 @@ in
       };
       Install.WantedBy = [ "graphical-session.target" ];
       Service.Environment = [
-        "DOTOOL_XKB_LAYOUT=${cfg.dotoolXkbLayout}"
-        "DOTOOL_XKB_VARIANT=${cfg.dotoolXkbVariant}"
+        "DOTOOL_XKB_LAYOUT=${cfg.xkbLayout}"
+        "DOTOOL_XKB_VARIANT=${cfg.xkbVariant}"
         "NUMEN_MODEL=${cfg.model}"
+        "NUMEN_SCRIPTS_DIR=${cfg.package}/etc/numen/scripts"
       ];
-      Service.ExecStart = "${cfg.numenPkg}/bin/numen ${cfg.extraArgs} ${lib.strings.concatStringsSep " " cfg.phrases}";
+      Service.ExecStart = "${cfg.package}/bin/numen ${cfg.extraArgs} ${lib.strings.concatStringsSep " " cfg.phrases}";
     };
   };
 }
