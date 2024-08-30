@@ -69,6 +69,9 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.packages = [
+        cfg.package
+    ];
     systemd.user.services.numen = {
       Unit = {
         Description = "Numen voice control";
